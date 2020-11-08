@@ -1,0 +1,40 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    font-family: sans-serif;
+}
+
+.container>p {
+    font-size: 1rem;
+}
+
+.container>em {
+    font-size: .8rem;
+}
+
+.dropzone {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    border-width: 1.5px;
+    border-radius: 8px;
+    border-color: #ced4da;
+    border-style: dashed;
+    background-color: white;
+    color: #787878;
+    outline: none;
+    transition: border .24s ease-in-out;
+    font-family: "Helvetica Neue";
+}
+
+.dropzone:focus {
+    border-color: #1464F4;
+    border-width: 2px;
+    color: black;
+}
+
+.dropzone.disabled {
+    opacity: 0.6;
+}
