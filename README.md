@@ -11,7 +11,8 @@ This system uses Python and Javascript as the main languages. The following have
 - [NodeJS 14.15.0+](https://nodejs.org/)
 - [ReactJS 17.0.1+](https://reactjs.org/)
 
-## Dependencies Installation 
+## Project Setup
+### Dependencies Installation 
 ```sh
 git clone https://github.com/andikarachman/Automated-Corrosion-Loop-Development.git
 cd Automated-Corrosion-Loop-Development
@@ -22,13 +23,24 @@ cd ..
 pip3 install -r requirements.txt
 ```
 
-## MongoDB
-The login uses MongoDB. You should fill the MongoURI of your MongoDB instance in `./config/keys.js`.
+### MongoDB
+The login uses MongoDB. Copy `./config/keys-sample.js` to `./config/keys.js`, and edit copied file to fill the MongoURI of your MongoDB instance.
 
-## Run the System
+### Run the System
 From the root, run
 ```sh
 npm start
+```
+
+## Docker
+Alternatively, you could use Docker to setup the project.
+On Linux based system, execute
+```sh
+./build-docker.sh
+```
+then run
+```sh
+./start-docker.sh
 ```
 
 ## Input File

@@ -1,0 +1,13 @@
+**
+!client
+!config/keys.js
+!config/passport.js
+!models
+!process
+!routes
+!temp
+!validation
+!LICENSE
+!package*.json
+!requirements.txt
+!server.js
