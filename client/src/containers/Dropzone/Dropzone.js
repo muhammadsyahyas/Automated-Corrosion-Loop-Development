@@ -14,6 +14,8 @@ import { Col } from 'react-bootstrap';
 
 
 function Dropzone (props) {
+  const [inputPath, setInputPath] = useState("");
+  const [outputPath, setOutputPath] = useState("");
   const [featureNames, setFeatureNames] = useState([]);
   const [selectedFeatures, setSelectedFeatures] = useState({});
   const [showSpinner, setShowSpinner] = useState(false);
@@ -50,7 +52,10 @@ function Dropzone (props) {
       }, { timeout: 0 })
       .then((response) => {
         console.log("Finish uploading Excel file.");
-        setFeatureNames(response.data);
+        const uploadInfo = JSON.parse(response.data);
+        setInputPath(uploadInfo.inputPath);
+        setOutputPath(uploadInfo.outputPath);
+        setFeatureNames(uploadInfo.featureNames);
         setShowSpinner(false);
         setIsFinishedUpload(true);
         setIsSuccesfulAlertOpened(true);

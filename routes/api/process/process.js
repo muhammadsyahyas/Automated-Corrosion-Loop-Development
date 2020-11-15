@@ -5,13 +5,13 @@ var ImageKit = require("imagekit");
 var XLSX = require('xlsx');
 const fs = require('fs');
 var { PythonShell } = require('python-shell');
+var path = require("path");
 
-// Storage for PDF files
+// Storage for Excel files
 var storage = multer.diskStorage ({
-  destination : './temp/excel/',
-  filename: function (req, file, cb) {
-    cb (null, "input.xlsx")
-  }
+  filename: (req, file, cb)=>{
+    cb(null, Date.now() + "_" + file.originalname)
+   }
 })
 var upload = multer({ storage: storage }).single('file');
 
@@ -31,11 +31,15 @@ function get_header_row(sheet) {
 
 router.post('/upload', upload, async (req, res) => {
   req.setTimeout(0);
+  let fileinfo = req.file;
   const userId = (req.body.userId).trim();
-  const workbook = XLSX.readFile("./temp/excel/input.xlsx");
+  const workbook = XLSX.readFile(fileinfo.path);
   const sheetNames = workbook.SheetNames;
   const featureNames = get_header_row(workbook.Sheets[sheetNames[0]]);
-  res.send(featureNames);
+  const outputPath = path.join(
+    path.parse(fileinfo.path).dir,
+    path.parse(fileinfo.path).name + "_result" + path.parse(fileinfo.path).ext);
+  res.send(JSON.stringify({inputPath: fileinfo.path, outputPath: outputPath, featureNames: featureNames}));
 })
 
 router.post('/grouping', async (req, res) => {
