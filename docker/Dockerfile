@@ -10,5 +10,5 @@ RUN cd client && npm install && cd ..
 RUN pip3 install --no-cache-dir -U pip &&\
     pip3 install --no-cache-dir -U -r requirements.txt
 
-EXPOSE 5000
+EXPOSE 3000 5000
 CMD [ "npm", "start" ]
