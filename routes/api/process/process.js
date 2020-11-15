@@ -45,7 +45,10 @@ router.post('/upload', upload, async (req, res) => {
 router.post('/grouping', async (req, res) => {
   options = {
     pythonOptions: ['-u'], 
-    args: ['-s', JSON.stringify(req.body)]
+    args: [
+      '-i', req.body.inputPath,
+      '-o', req.body.outputPath,
+      '-s', JSON.stringify(req.body.selectedFeatures)]
   };
   PythonShell.run('./process/corrosion_loop/corrosion_looping.py', options, async function (err, results) {
     if (err) {
@@ -57,9 +60,8 @@ router.post('/grouping', async (req, res) => {
   }); 
 })
 
-router.get('/download', function(req, res) {
-  const downloadPath = "./temp/result/output.xlsx";
-  res.download(downloadPath);
+router.post('/download', function(req, res) {
+  res.download(req.body.outputPath);
 });
 
 module.exports = router;

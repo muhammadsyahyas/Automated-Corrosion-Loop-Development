@@ -10,12 +10,8 @@ from sklearn.cluster import KMeans
 import ssl
 ssl._create_default_https_context = ssl._create_unverified_context
 
-ap = argparse.ArgumentParser()
-ap.add_argument("-s", "--selectedFeatures", help="Selected features")
-args = vars(ap.parse_args())
-
-def createDataFrame():
-	book = xlrd.open_workbook("./temp/excel/input.xlsx")
+def createDataFrame(input_path: str):
+	book = xlrd.open_workbook(input_path)
 	sheet = book.sheet_by_index(0)
 	data = []
 	sheet.row_values(0)
@@ -72,8 +68,14 @@ def numericalFeaturesGrouping(categoricalGroups, categoricalFeatures, numericalF
 	# numberOfCorrLoop = len(corrosionLoops["CORROSION_LOOP"].unique())
 	return corrosionLoops
 
-if __name__ == "__main__": 
-	df = createDataFrame()
+if __name__ == "__main__":
+	ap = argparse.ArgumentParser()
+	ap.add_argument("-i", "--inputPath", help="Path to the input file")
+	ap.add_argument("-o", "--outputPath", help="Output path")
+	ap.add_argument("-s", "--selectedFeatures", help="Selected features")
+	args = vars(ap.parse_args())
+
+	df = createDataFrame(args["inputPath"])
 	selectedFeatures = eval(args["selectedFeatures"])
 	categoricalFeatures = []
 	numericalFeatures = []
@@ -87,4 +89,4 @@ if __name__ == "__main__":
 	categoricalGroups = categoricalFeaturesGrouping(df, categoricalFeatures)
 	corrosionLoops = numericalFeaturesGrouping(categoricalGroups, categoricalFeatures, numericalFeatures, maxDiffList)
 	del corrosionLoops['LABEL']
-	corrosionLoops.to_excel("./temp/result/output.xlsx")
+	corrosionLoops.to_excel(args["outputPath"])

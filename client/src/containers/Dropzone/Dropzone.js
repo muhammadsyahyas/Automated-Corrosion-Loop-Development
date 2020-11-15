@@ -82,7 +82,10 @@ function Dropzone (props) {
       headers: {
           'Content-Type': 'application/json'
       },
-      body: JSON.stringify(selectedFeatures)
+      body: JSON.stringify({
+        inputPath: inputPath,
+        outputPath: outputPath,
+        selectedFeatures: selectedFeatures})
     });
     setTimeout(() => {
       setIsFinishedProcess(true);
@@ -96,7 +99,13 @@ function Dropzone (props) {
   }
 
   const handleClickDownload = () => {
-    window.open("http://localhost:5000/api/process/download");
+    fetch('http://localhost:5000/api/process/download', {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({outputPath: outputPath})
+    });
   }
 
   const {
