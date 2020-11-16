@@ -9,5 +9,6 @@
 !validation
 !LICENSE
 !package*.json
+!README.md
 !requirements.txt
 !server.js
