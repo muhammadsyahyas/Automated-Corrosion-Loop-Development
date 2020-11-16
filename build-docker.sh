@@ -1,2 +1,2 @@
 #!/bin/bash
-docker build -t acld:latest docker
+docker build -t acld:latest -f docker/Dockerfile .
